@@ -36,5 +36,19 @@ namespace ContosoPizzWebAPI.Controllers
                 pizza
             );
         }
+        
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Pizza pizza)
+        {
+            if (id != pizza.Id) return BadRequest();
+            
+            var pizzaOnDB = PizzaService.GetPizza(id);
+
+            if(pizzaOnDB is null) return NotFound();
+
+            PizzaService.Update(pizza);
+
+            return(NoContent());
+        }
     }
 }
